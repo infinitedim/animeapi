@@ -56,7 +56,7 @@ app.use((e, req, res, next) => {
 });
 
 connect(
-  `mongodb+srv://dimas:${process.env.SECRET_KEY}@animelist.oyy1g9l.mongodb.net/?retryWrites=true&w=majority`
+  `mongodb+srv://dimas:FriHpGaHsr6JUC6s@animelist.oyy1g9l.mongodb.net/?retryWrites=true&w=majority`
 )
   .then(() =>
     app.listen(port, () => {
