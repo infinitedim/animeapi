@@ -1,0 +1,43 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base",
+    "plugin:eslint/recommended",
+    "plugin:prettier/recommended",
+    "eslint",
+    "prettier"
+  ],
+
+  "overrides": [
+    {
+      "files": ["*.js", "*.mjs", "*.cjs", "*.jsx"]
+    }
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "arrowFunctions": true,
+      "modules": true
+    }
+  },
+  "plugins": ["prettier", "eslint"],
+  "rules": {
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "tabWidth": 2,
+        "printWidth": 80,
+        "singleQuotes": false,
+        "jsxSingleQuotes": false,
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}
