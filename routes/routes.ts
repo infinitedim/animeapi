@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from "express";
 import { get, post, search, edit, del } from "../controllers/controllers";
 import { body, ValidationChain } from "express-validator";

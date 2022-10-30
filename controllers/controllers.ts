@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import path from "path";
 import { ValidationError, validationResult, Result } from "express-validator";
 import { Request, Response, NextFunction } from "express";
@@ -10,6 +12,11 @@ interface resultsInterface {
   sinopsys?: string;
   author?: string;
   year?: string;
+}
+
+interface ErrorInterface {
+  code: number;
+  data: unknown;
 }
 
 const get = async (req: Request, res: Response): Promise<void> => {
@@ -26,14 +33,14 @@ const post = (req: Request, res: Response): void => {
   const error: Result<ValidationError> = validationResult(req);
 
   if (!error.isEmpty()) {
-    const e = new Error("Invalid value");
+    const e: ErrorInterface = new Error("Invalid value");
     e.code = 400;
     e.data = error.array();
     throw e;
   }
 
   if (req.file != null) {
-    const e = new Error("Files must be upload");
+    const e: ErrorInterface = new Error("Files must be upload");
     e.code = 422;
     throw e;
   }
@@ -72,20 +79,15 @@ const search = async (req: Request, res: Response): Promise<void> => {
   });
 };
 
-const edit = (req: Request, res: Response, next: NextFunction): void => {
+const edit = async (req: Request, res: Response): Promise<void> => {
   const error: Result<ValidationError> = validationResult(req);
 
   if (!error.isEmpty()) {
-    const e = new Error("Invalid value");
-    e.code = 400;
-    e.data = error.array();
-    throw e;
+    throw new Error("Invalid value");
   }
 
   if (req.file != null) {
-    const e = new Error("Files must be upload");
-    e.code = 422;
-    throw e;
+    throw new Error("Files must be upload");
   }
 
   const results: resultsInterface = {
@@ -96,31 +98,45 @@ const edit = (req: Request, res: Response, next: NextFunction): void => {
     year: req.body.year,
   };
 
-  const animeId: string = req.params.id;
-  AnimeModel.findById(animeId)
-    .then((response): void => {
-      if (response == null) {
-        const err = new Error("Anime not found!");
-        err.code(404);
-      }
+  try {
+    const { id } = req.params;
+    const check = await AnimeModel.findOne({
+      _id: id,
+    });
 
-      response.trailer = results.trailer;
-      response.title = results.title;
-      response.sinopsys = results.sinopsys;
-      response.author = results.author;
-      response.year = results.year;
-
-      response.save();
-    })
-    .then((response): void => {
-      res.status(200).json({
-        status: "OK",
-        code: 200,
-        messege: "Successfully update data",
-        data: response,
+    if (!check) {
+      return res.status(404).json({
+        // ...code
       });
-    })
-    .catch((e) => next(e));
+    }
+
+    const updatedAnime = await AnimeModel.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          trailer: results.trailter,
+          title: results.title,
+          sinopsys: results.sinopsys,
+          author: results.author,
+          year: results.year,
+        },
+      },
+    );
+
+    if (!updatedAnime) {
+      return res.status(500).json({
+        // ...code
+      });
+    }
+
+    return res.status(200).json({
+      // ...code
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 const del = (req: Request, res: Response, next: NextFunction): void => {
