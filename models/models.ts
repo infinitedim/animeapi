@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const AnimeModel = Schema(
+const AnimeModel = new Schema(
   {
     title: {
       type: String,
@@ -24,8 +24,8 @@ const AnimeModel = Schema(
     },
   },
   {
-    timetamps: true,
-  }
+    timestamps: true,
+  },
 );
 
 export default model("Anime List", AnimeModel);
