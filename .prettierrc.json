@@ -3,6 +3,8 @@
     "tabWidth": 2,
     "printWidth": 80,
     "singleQuotes": false,
-    "jsxSingleQuotes": false,
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "parser": "typescript",
     "endOfLine": "auto"
 }

@@ -1,0 +1,38 @@
+{
+  "rewrites": [
+    {
+      "source": "/anime/v1/(.*)",
+      "destination": "/anime/v1/get"
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "public": false,
+  "redirects": [
+    {
+      "source": "/src/(.*)",
+      "destination": "/anime/v1/get",
+      "permanent": true
+    },
+    {
+      "source": "/src",
+      "destination": "/anime/v1/get",
+      "permanent": true
+    },
+    {
+      "source": "/api/index.js",
+      "destination": "/anime/v1/get",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "destination": "/anime/v1/get",
+      "permanent": true
+    },
+    {
+      "source": "/start.js",
+      "destination": "/anime/v1/get",
+      "permanent": true
+    }
+  ]
+}
