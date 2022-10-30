@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import path from "path";
@@ -19,6 +20,10 @@ interface ErrorInterface {
   data: unknown;
 }
 
+interface EditAnimeRequestType extends Request {
+  file?: ReturnType<typeof File>;
+}
+
 const get = async (req: Request, res: Response): Promise<void> => {
   const data = await AnimeModel.find();
   res.status(200).json({
@@ -29,7 +34,9 @@ const get = async (req: Request, res: Response): Promise<void> => {
   });
 };
 
-const post = (req: Request, res: Response): void => {
+const post = (
+  req: Request, res: Response,
+): void => {
   const error: Result<ValidationError> = validationResult(req);
 
   if (!error.isEmpty()) {
@@ -40,13 +47,15 @@ const post = (req: Request, res: Response): void => {
   }
 
   if (req.file != null) {
-    const e: ErrorInterface = new Error("Files must be upload");
+    const e: ReturnType<typeof Error> & ErrorInterface = new Error(
+      "Files must be upload",
+    );
     e.code = 422;
     throw e;
   }
 
   const results: resultsInterface = {
-    trailer: req.file.path,
+    trailer: req.file?.path ?? "", 
     title: req.body.title,
     sinopsys: req.body.sinopsys,
     author: req.body.author,
@@ -79,7 +88,7 @@ const search = async (req: Request, res: Response): Promise<void> => {
   });
 };
 
-const edit = async (req: Request, res: Response): Promise<void> => {
+const edit = async (req: EditAnimeRequestType, res: Response): Promise<Response> => {
   const error: Result<ValidationError> = validationResult(req);
 
   if (!error.isEmpty()) {
@@ -91,7 +100,7 @@ const edit = async (req: Request, res: Response): Promise<void> => {
   }
 
   const results: resultsInterface = {
-    trailer: req.file.path,
+    trailer: req.file?.path ?? "", // ini possible undefined req.file nya
     title: req.body.title,
     sinopsys: req.body.sinopsys,
     author: req.body.author,
@@ -104,7 +113,7 @@ const edit = async (req: Request, res: Response): Promise<void> => {
       _id: id,
     });
 
-    if (!check) {
+    if (check == null) {
       return res.status(404).json({
         // ...code
       });
@@ -116,7 +125,7 @@ const edit = async (req: Request, res: Response): Promise<void> => {
       },
       {
         $set: {
-          trailer: results.trailter,
+          trailer: results.trailer,
           title: results.title,
           sinopsys: results.sinopsys,
           author: results.author,
@@ -125,9 +134,12 @@ const edit = async (req: Request, res: Response): Promise<void> => {
       },
     );
 
-    if (!updatedAnime) {
+    if (updatedAnime == null) {
       return res.status(500).json({
-        // ...code
+        status: "ERROR",
+        code: 500,
+        messege: "...",
+        data: response,
       });
     }
 
