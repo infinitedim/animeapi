@@ -5,11 +5,11 @@ import { PathLike, unlink } from "fs";
 import AnimeModel from "../models/models";
 
 interface resultsInterface {
-  trailer?: any;
-  title?: any;
-  sinopsys?: any;
-  author?: any;
-  year?: any;
+  trailer?: string;
+  title?: string;
+  sinopsys?: string;
+  author?: string;
+  year?: string;
 }
 
 const get = async (req: Request, res: Response): Promise<void> => {

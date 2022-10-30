@@ -22,11 +22,15 @@ const DIRNAME: string = path.dirname(FILENAME);
 const mongoUrl = `mongodb+srv://dimas:${process.env.SECRET_KEY}@animelist.oyy1g9l.mongodb.net/?retryWrites=true&w=majority`;
 
 const fileStorage: multer.StorageEngine = diskStorage({
-  destination: (_req, _file, cb: (arg0: null, arg1: string) => void): void => {
+  destination: (
+    req,
+    _file: Express.Multer.File,
+    cb: (arg0: null, arg1: string) => void,
+  ): void => {
     cb(null, "video");
   },
   filename: (
-    _req,
+    req: Request,
     file: { originalname: string },
     cb: (arg0: null, arg1: string) => void,
   ): void => {
@@ -35,7 +39,7 @@ const fileStorage: multer.StorageEngine = diskStorage({
 });
 
 const fileFilter = (
-  req,
+  req: Request,
   file: { mimetype: string },
   cb: (arg0: null, arg1: boolean) => void,
 ): void => {
@@ -57,7 +61,7 @@ app.use(multer({ storage: fileStorage, fileFilter }).single("trailer"));
 app.use(
   (
     e: { code: number; messege: string; data: unknown },
-    _req: Request,
+    req: Request,
     res: Response,
     _next: NextFunction,
   ): void => {
