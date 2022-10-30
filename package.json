@@ -5,7 +5,7 @@
   "main": "server.ts",
   "type": "module",
   "scripts": {
-    "dev": "ts-node server.ts",
+    "dev": "nodemon --experimental-specifier-resolution=node server.ts",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
