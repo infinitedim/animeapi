@@ -2,7 +2,7 @@
   "name": "studycase",
   "version": "1.0.0",
   "description": "API anime list",
-  "main": "server.ts",
+  "main": "index.ts",
   "scripts": {
     "dev": "nodemon './server.ts'",
     "build": "tsc -p './tsconfig.json'",
