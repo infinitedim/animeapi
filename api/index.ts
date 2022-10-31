@@ -84,17 +84,4 @@ async function connectDB(): Promise<void> {
 
 void connectDB();
 
-// Function to check whether the video folder exists or not
-function checkVideoFolder(): void {
-  const videoPath = path.resolve(`${process.cwd()}/src/video`);
-
-  if (!fs.existsSync(videoPath)) {
-    fs.mkdirSync(videoPath);
-  } else {
-    console.log("The video folder already exists");
-  }
-}
-
-void checkVideoFolder();
-
 export default app;
