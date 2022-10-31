@@ -8,8 +8,8 @@ import { fileURLToPath } from "url";
 import multer, { diskStorage } from "multer";
 import dotenv from "dotenv";
 import helmet from "helmet";
-import routes from "./routes/routes";
 import { Server, IncomingMessage, ServerResponse } from "http";
+import routes from "./routes/routes";
 
 // running dotenv for environtment
 dotenv.config();
