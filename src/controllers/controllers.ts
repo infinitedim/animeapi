@@ -14,8 +14,6 @@ class CustomError extends Error {
 }
 
 function sendCustomError(res: Response, error: CustomError): Response {
-  console.error(error);
-
   return res.status(error?.statusCode ?? 500).json({
     code: error?.statusCode ?? 500,
     message: error?.message ?? "Internal Server error",
@@ -24,9 +22,9 @@ function sendCustomError(res: Response, error: CustomError): Response {
 }
 
 function deletetrailer(filePath: string): void {
-  filePath = path.join(`${__dirname}../${filePath}`);
+  const file = path.resolve(__dirname, "../", filePath);
 
-  unlink(filePath, (e) => console.error(e));
+  unlink(file, (e) => e !== null && console.error(e));
 }
 
 interface resultsInterface {
@@ -55,15 +53,22 @@ const post = async (
   const error: Result<ValidationError> = validationResult(req);
 
   if (!error.isEmpty()) {
-    throw new Error("Invalid value");
+    return res.status(400).json({
+      status: "ERROR",
+      code: 400,
+      message: "...",
+      ...error,
+    });
   }
 
   if (req.file == null || req.file === undefined) {
     throw new Error("Files must be upload");
   }
 
+  const filePath = req.file?.path.split("/").pop();
+
   const results: resultsInterface = {
-    trailer: "path" in req.file ? req.file?.path : "",
+    trailer: `video/${filePath === undefined ? "" : filePath}`,
     title: req.body.title,
     sinopsys: req.body.sinopsys,
     author: req.body.author,
@@ -75,7 +80,7 @@ const post = async (
     const savedAnime = await posting.save();
 
     if (savedAnime === null || savedAnime === undefined) {
-      throw new CustomError("Error when posting anime");
+      throw new CustomError("Error when posting anime", 500);
     }
 
     return res.status(201).json({
@@ -88,6 +93,8 @@ const post = async (
     if (error instanceof CustomError) {
       return sendCustomError(res, error);
     }
+
+    console.error(error);
 
     throw error;
   }
@@ -131,8 +138,9 @@ const edit = async (
     throw new Error("Files must be upload");
   }
 
+  const newFilePath = req.file?.path.split("/").pop();
   const results: resultsInterface = {
-    trailer: "path" in req.file ? req.file?.path : "", // ini possible undefined req.file nya
+    trailer: `video/${newFilePath === undefined ? "" : newFilePath}`,
     title: req.body.title,
     sinopsys: req.body.sinopsys,
     author: req.body.author,

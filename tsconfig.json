@@ -100,6 +100,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["api", "src"], // server.ts ngga perlu diinclude, karena vercel otomatis deploy endpoint difolder api
+  "include": ["api", "src"], // server.ts ngga perlu di include, karena vercel otomatis deploy endpoint difolder api (Serverless Function)
   "exclude": ["node_modules", "build"]
 }
