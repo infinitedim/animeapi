@@ -45,7 +45,7 @@ app.use(cors());
 app.use(helmet());
 
 app.use("/api/video", express.static(path.resolve(`${process.cwd()}/video`)));
-app.use("/api/v1", AppRoutes);
+app.use("/api/anime/v1", AppRoutes);
 app.use(multer({ storage: fileStorage, fileFilter }).single("trailer"));
 
 app.use(

@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/api/anime/v1/(.*)",
+      "source": "/api/(.*)",
       "destination": "/api"
     }
   ],
@@ -31,16 +31,6 @@
     },
     {
       "source": "/server.js",
-      "destination": "/api/anime/v1",
-      "permanent": true
-    },
-    {
-      "source": "/api/anime",
-      "destination": "/api/anime/v1",
-      "permanent": true
-    },
-    {
-      "source": "/api/anime/",
       "destination": "/api/anime/v1",
       "permanent": true
     }
