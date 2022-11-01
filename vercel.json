@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/anime/v1/(.*)",
-      "destination": "/anime/v1/get"
+      "source": "/api/(.*)",
+      "destination": "/api"
     }
   ],
   "cleanUrls": true,
@@ -11,27 +11,27 @@
   "redirects": [
     {
       "source": "/src/(.*)",
-      "destination": "/anime/v1/get",
+      "destination": "/api/anime/v1",
       "permanent": true
     },
     {
       "source": "/src",
-      "destination": "/anime/v1/get",
+      "destination": "/api/anime/v1",
       "permanent": true
     },
     {
       "source": "/api/index.js",
-      "destination": "/anime/v1/get",
+      "destination": "/api/anime/v1",
       "permanent": true
     },
     {
       "source": "/",
-      "destination": "/anime/v1/get",
+      "destination": "/api/anime/v1",
       "permanent": true
     },
     {
-      "source": "/start.js",
-      "destination": "/anime/v1/get",
+      "source": "/server.js",
+      "destination": "/api/anime/v1",
       "permanent": true
     }
   ]
