@@ -20,7 +20,7 @@ function copyVideos() {
   })
 }
 
-// Function to check whether the video folder exists or not
+//  Fungsi untuk mengecek apakah folder video tersedia atau tidak
 function checkVideoFolder(): void {
   const videoPath = path.resolve(`${process.cwd()}/src/video`);
   const productionVideoPath = path.resolve(`${process.cwd()}/build/src/video`);
