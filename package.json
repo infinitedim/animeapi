@@ -4,7 +4,7 @@
   "description": "API anime list",
   "main": "index.ts",
   "scripts": {
-    "dev": "nodemon './server.ts'",
+    "dev": "nodemon ./server.ts",
     "build": "npm-run-all build:ts scripts:build",
     "build:ts": "tsc -p './tsconfig.json'",
     "scripts:build": "ts-node ./scripts/build.ts",

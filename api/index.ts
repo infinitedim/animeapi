@@ -7,7 +7,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import multer, { diskStorage } from "multer";
 import path from "path";
-import AppRoutes from "../src/routes/routes";
+import routes from "../src/routes/routes";
 import fs from "fs";
 
 // running dotenv for environment
@@ -50,7 +50,7 @@ app.use(
   "/api/video",
   express.static(path.resolve(`${process.cwd()}/src/video`)),
 );
-app.use("/api/anime/v1", AppRoutes);
+app.use("/api/anime/v1", routes);
 
 app.use(
   (
