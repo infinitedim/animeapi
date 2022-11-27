@@ -16,10 +16,10 @@ const validation: ValidationChain[] = [
   body("year").isLength({ min: 2, max: 4 }).withMessage("Year is required"),
 ];
 
-routes.get("/get", get);
-routes.post("/post", validation, post);
-routes.get("/search/:id", search);
-routes.put("/edit/:id", validation, edit);
-routes.delete("/delete/:id", del);
+routes.get("/anime", get);
+routes.post("/anime/new", validation, post);
+routes.get("/anime/:id", search);
+routes.put("/anime/:id/edit", validation, edit);
+routes.delete("/anime/:id/delete", del);
 
 export default routes;
